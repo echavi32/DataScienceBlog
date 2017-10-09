@@ -22,25 +22,16 @@ We&amp;rsquo;ll start with creating a new site with a very basic template.</desc
     </item>
     
     <item>
-      <title>Migrate to Hugo from Jekyll</title>
+      <title>Filtering Rows/Columns Using SQL</title>
       <link>/post/migrate-from-jekyll/</link>
       <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
       
       <guid>/post/migrate-from-jekyll/</guid>
-      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
-▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
-▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+      <description>Set Up library(Lahman) library(sqldf)  ##A General Lay Out
+Suppose we want to see the homerun totals for the 1927 Yankees. We could write the following:
+query&amp;lt;-&amp;quot;SELECT playerID,yearID,teamID,HR FROM Batting WHERE teamID=&#39;NYA&#39; and yearID=1927&amp;quot; sqldf(query)  ##Setting Limits and Data Layout
+Suppose you want to find all instances where Yankees have hit 40 homeruns or more.
+query&amp;lt;-&amp;quot;SELECT playerID,yearID,teamID,HR FROM Batting WHERE HR&amp;gt;39&amp;quot; sqldf(query)  ##Setting Right and Left Limits To Data Set</description>
     </item>
     
     <item>
@@ -71,6 +62,27 @@ More complete instructions are available at installing hugo
 Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
 Follow the following steps:
  Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>bu— title: “Hello R Markdown” author: “Frida Gomam” date: 2015-07-23T21:13:14-05:00 categories: [“R”] tags: [“R Markdown”, “plot”, “regression”] —
+R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/post/migrate-from-jekyll/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/migrate-from-jekyll/</guid>
+      <description>Filtering Rows/Columns Using SQLcode{white-space: pre;}pre:not([class]) {background-color: white;}if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) {window.setTimeout(function() {hljs.initHighlighting();}, 0);}h1 {font-size: 34px;}h1.title {font-size: 38px;}h2 {font-size: 30px;}h3 {font-size: 24px;}h4 {font-size: 18px;}h5 {font-size: 16px;}h6 {font-size: 12px;}.</description>
     </item>
     
   </channel>

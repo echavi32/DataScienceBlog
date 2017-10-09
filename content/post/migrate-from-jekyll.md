@@ -1,156 +1,129 @@
 ---
-date: 2014-03-10
-linktitle: Migrating from Jekyll
+title: "Filtering Rows/Columns Using SQL"
+linktitle: filtering with SQL
+date: '2014-03-10'
+prev: /tutorials/mathjax
 menu:
   main:
-    name: Jekyll migration
-prev: /tutorials/mathjax
-title: Migrate to Hugo from Jekyll
+    name: SQL Filtering
 weight: 10
 ---
 
-## Move static content to `static`
-Jekyll has a rule that any directory not starting with `_` will be copied as-is to the `_site` output. Hugo keeps all static content under `static`. You should therefore move it all there.
-With Jekyll, something that looked like
+## Set Up
 
-    ▾ <root>/
-        ▾ images/
-            logo.png
+```{r warning=FALSE, message=FALSE}
+library(Lahman)
+library(sqldf)
+```
 
-should become
+##A General Lay Out
 
-    ▾ <root>/
-        ▾ static/
-            ▾ images/
-                logo.png
+Suppose we want to see the homerun totals for the 1927 Yankees. We could write the following:
 
-Additionally, you'll want any files that should reside at the root (such as `CNAME`) to be moved to `static`.
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR FROM Batting 
+WHERE teamID='NYA'  and yearID=1927"
+sqldf(query)
+```
 
-## Create your Hugo configuration file
-Hugo can read your configuration as JSON, YAML or TOML. Hugo supports parameters custom configuration too. Refer to the [Hugo configuration documentation](/overview/configuration/) for details.
+##Setting Limits and Data Layout
 
-## Set your configuration publish folder to `_site`
-The default is for Jekyll to publish to `_site` and for Hugo to publish to `public`. If, like me, you have [`_site` mapped to a git submodule on the `gh-pages` branch](http://blog.blindgaenger.net/generate_github_pages_in_a_submodule.html), you'll want to do one of two alternatives:
+Suppose you want to find all instances where Yankees have hit 40 homeruns or more.
 
-1. Change your submodule to point to map `gh-pages` to public instead of `_site` (recommended).
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE HR>39"
+sqldf(query)
+```
 
-        git submodule deinit _site
-        git rm _site
-        git submodule add -b gh-pages git@github.com:your-username/your-repo.git public
+##Setting Right and Left Limits To Data Set
 
-2. Or, change the Hugo configuration to use `_site` instead of `public`.
+Suppose we want to now find all examples where a player had more than 40 homeruns but less than 60 strikeouts.
 
-        {
-            ..
-            "publishdir": "_site",
-            ..
-        }
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR,SO FROM Batting
+WHERE HR>39 and SO<60"
+sqldf(query)
+```
 
-## Convert Jekyll templates to Hugo templates
-That's the bulk of the work right here. The documentation is your friend. You should refer to [Jekyll's template documentation](http://jekyllrb.com/docs/templates/) if you need to refresh your memory on how you built your blog and [Hugo's template](/layout/templates/) to learn Hugo's way.
+##Setting A Starting Limit, With Ordering By
 
-As a single reference data point, converting my templates for [heyitsalex.net](http://heyitsalex.net/) took me no more than a few hours.
+Again, you want to find all instances of a player striking out less than 10 times. At least 400 at-bats (AB) players with least strikeouts at the top.
 
-## Convert Jekyll plugins to Hugo shortcodes
-Jekyll has [plugins](http://jekyllrb.com/docs/plugins/); Hugo has [shortcodes](/doc/shortcodes/). It's fairly trivial to do a port.
+```{r}
+query<-"SELECT playerID,yearID,teamID,SO,AB FROM Batting
+WHERE AB>399 and SO<10"
+sqldf(query)
+```
 
-### Implementation
-As an example, I was using a custom [`image_tag`](https://github.com/alexandre-normand/alexandre-normand/blob/74bb12036a71334fdb7dba84e073382fc06908ec/_plugins/image_tag.rb) plugin to generate figures with caption when running Jekyll. As I read about shortcodes, I found Hugo had a nice built-in shortcode that does exactly the same thing.
+##Ordering By, Different Scenario
 
-Jekyll's plugin:
+Finding every instance of a player hitting more than 50 homeruns but lets have the players with the most homeruns at the top.
 
-    module Jekyll
-      class ImageTag < Liquid::Tag
-        @url = nil
-        @caption = nil
-        @class = nil
-        @link = nil
-        // Patterns
-        IMAGE_URL_WITH_CLASS_AND_CAPTION =
-        IMAGE_URL_WITH_CLASS_AND_CAPTION_AND_LINK = /(\w+)(\s+)((https?:\/\/|\/)(\S+))(\s+)"(.*?)"(\s+)->((https?:\/\/|\/)(\S+))(\s*)/i
-        IMAGE_URL_WITH_CAPTION = /((https?:\/\/|\/)(\S+))(\s+)"(.*?)"/i
-        IMAGE_URL_WITH_CLASS = /(\w+)(\s+)((https?:\/\/|\/)(\S+))/i
-        IMAGE_URL = /((https?:\/\/|\/)(\S+))/i
-        def initialize(tag_name, markup, tokens)
-          super
-          if markup =~ IMAGE_URL_WITH_CLASS_AND_CAPTION_AND_LINK
-            @class   = $1
-            @url     = $3
-            @caption = $7
-            @link = $9
-          elsif markup =~ IMAGE_URL_WITH_CLASS_AND_CAPTION
-            @class   = $1
-            @url     = $3
-            @caption = $7
-          elsif markup =~ IMAGE_URL_WITH_CAPTION
-            @url     = $1
-            @caption = $5
-          elsif markup =~ IMAGE_URL_WITH_CLASS
-            @class = $1
-            @url   = $3
-          elsif markup =~ IMAGE_URL
-            @url = $1
-          end
-        end
-        def render(context)
-          if @class
-            source = "<figure class='#{@class}'>"
-          else
-            source = "<figure>"
-          end
-          if @link
-            source += "<a href=\"#{@link}\">"
-          end
-          source += "<img src=\"#{@url}\">"
-          if @link
-            source += "</a>"
-          end
-          source += "<figcaption>#{@caption}</figcaption>" if @caption
-          source += "</figure>"
-          source
-        end
-      end
-    end
-    Liquid::Template.register_tag('image', Jekyll::ImageTag)
+```{r}
+query<-"SELECT playerID,yearID,teamID,HR FROM Batting
+WHERE HR>50
+ORDER BY HR DESC"
+sqldf(query)
+```
 
-is written as this Hugo shortcode:
+Finding Babe-Ruth's career homerun totals.
 
-    <!-- image -->
-    <figure {{ with .Get "class" }}class="{{.}}"{{ end }}>
-        {{ with .Get "link"}}<a href="{{.}}">{{ end }}
-            <img src="{{ .Get "src" }}" {{ if or (.Get "alt") (.Get "caption") }}alt="{{ with .Get "alt"}}{{.}}{{else}}{{ .Get "caption" }}{{ end }}"{{ end }} />
-        {{ if .Get "link"}}</a>{{ end }}
-        {{ if or (or (.Get "title") (.Get "caption")) (.Get "attr")}}
-        <figcaption>{{ if isset .Params "title" }}
-            {{ .Get "title" }}{{ end }}
-            {{ if or (.Get "caption") (.Get "attr")}}<p>
-            {{ .Get "caption" }}
-            {{ with .Get "attrlink"}}<a href="{{.}}"> {{ end }}
-                {{ .Get "attr" }}
-            {{ if .Get "attrlink"}}</a> {{ end }}
-            </p> {{ end }}
-        </figcaption>
-        {{ end }}
-    </figure>
-    <!-- image -->
+```{r}
+query<-"SELECT playerID, sum(HR) FROM Batting
+WHERE playerID='ruthba01'
+GROUP BY playerID"
+sqldf(query)
+```
 
-### Usage
-I simply changed:
+Finding the Career homerun totals of all players, but limit the display to only those that hit more than 600, and having the players with the highest total at the top.
 
-    {% image full http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg "One of my favorite touristy-type photos. I secretly waited for the good light while we were "having fun" and took this. Only regret: a stupid pole in the top-left corner of the frame I had to clumsily get rid of at post-processing." ->http://www.flickr.com/photos/alexnormand/4829260124/in/set-72157624547713078/ %}
+```{r}
+query<-"SELECT playerID, sum(HR) FROM Batting
+GROUP BY playerID
+HAVING sum(HR)>600
+ORDER BY sum(HR) DESC"
+sqldf(query)
+```
 
-to this (this example uses a slightly extended version named `fig`, different than the built-in `figure`):
+Finding the players with the highest homerun average over their career. Limit the display to those who have an average of more than 30. Players withe the highest average at the top.
 
-    {{%/* fig class="full" src="http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg" title="One of my favorite touristy-type photos. I secretly waited for the good light while we were having fun and took this. Only regret: a stupid pole in the top-left corner of the frame I had to clumsily get rid of at post-processing." link="http://www.flickr.com/photos/alexnormand/4829260124/in/set-72157624547713078/" */%}}
+```{r}
+query<-"SELECT playerID, avg(HR) FROM Batting
+GROUP BY playerID 
+HAVING avg(HR)>30
+ORDER BY avg(HR) DESC"
+sqldf(query)
+```
 
-As a bonus, the shortcode named parameters are, arguably, more readable.
+Finding all instances of players hitting more than 50 homeruns, give first, and last names teamID, yearID, and homeruns
 
-## Finishing touches
-### Fix content
-Depending on the amount of customization that was done with each post with Jekyll, this step will require more or less effort. There are no hard and fast rules here except that `hugo server --watch` is your friend. Test your changes and fix errors as needed.
 
-### Clean up
-You'll want to remove the Jekyll configuration at this point. If you have anything else that isn't used, delete it.
+```{r}
+query<-"SELECT nameFirst, nameLast, yearID, teamID, HR
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE HR>50"
+sqldf(query)
+```
+List firstname, lastname, year, teamID, and HR limit to babe ruth.
 
-## A practical example in a diff
-[Hey, it's Alex](http://heyitsalex.net/) was migrated in less than a _father-with-kids day_ from Jekyll to Hugo. You can see all the changes (and screw-ups) by looking at this [diff](https://github.com/alexandre-normand/alexandre-normand/compare/869d69435bd2665c3fbf5b5c78d4c22759d7613a...b7f6605b1265e83b4b81495423294208cc74d610).
+```{r}
+query<-"SELECT nameFirst, nameLast, yearID, teamID, HR 
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+sqldf(query)
+```
+
+baberuth stats playerID, team names, yearID, HR
+
+```{r}
+query<-"SELECT nameFirst, nameLast, Batting.yearID, Batting.HR
+FROM Batting INNER JOIN Teams INNER JOIN Master
+ON Batting.teamID = Teams.teamID AND Batting.yearID=Teams.yearID
+WHERE Batting.playerID='ruthba01'
+ORDER BY Batting.HR DESC"
+sqldf(query)
+```
+
