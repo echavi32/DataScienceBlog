@@ -1,0 +1,42 @@
+---
+title: SQL Fun
+author: Edward Chavis
+date: '2017-10-09'
+slug: sql-fun
+categories: []
+tags: []
+---
+
+
+
+<pre class="r"><code>library(Lahman)
+library(sqldf)
+library(ggplot2)</code></pre>
+<div id="the-data-" class="section level2">
+<h2>The Data——————————————————-</h2>
+<pre class="r"><code>query&lt;-&quot;SELECT playerID, salary 
+FROM Salaries&quot;
+
+result&lt;-sqldf(query)</code></pre>
+</div>
+<div id="visualizing-the-data" class="section level2">
+<h2>Visualizing The Data——————————————–</h2>
+<pre class="r"><code>ggplot()+
+  geom_histogram(data=result,aes(x=salary))</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2017-10-09-sql-fun_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="the-data" class="section level2">
+<h2>The Data——————————————————–</h2>
+<pre class="r"><code>query&lt;-&quot;SELECT yearID, avg(salary) AS avg_salary
+FROM Salaries
+GROUP BY yearID&quot;
+
+result&lt;-sqldf(query)</code></pre>
+</div>
+<div id="visualizing-the-data-1" class="section level2">
+<h2>Visualizing the Data——————————————–</h2>
+<pre class="r"><code>ggplot()+
+  geom_line(data=result,aes(x=yearID, y=avg_salary))</code></pre>
+<p><img src="/post/2017-10-09-sql-fun_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>

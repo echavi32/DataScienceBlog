@@ -1,0 +1,48 @@
+---
+title: SQL Fun
+author: Edward Chavis
+date: '2017-10-09'
+slug: sql-fun
+categories: []
+tags: []
+---
+
+```{r warning=FALSE, message=FALSE}
+library(Lahman)
+library(sqldf)
+library(ggplot2)
+```
+
+##The Data-------------------------------------------------------
+
+```{r}
+query<-"SELECT playerID, salary 
+FROM Salaries"
+
+result<-sqldf(query)
+```
+
+##Visualizing The Data--------------------------------------------
+
+```{r}
+ggplot()+
+  geom_histogram(data=result,aes(x=salary))
+```
+
+##The Data--------------------------------------------------------
+
+```{r}
+query<-"SELECT yearID, avg(salary) AS avg_salary
+FROM Salaries
+GROUP BY yearID"
+
+result<-sqldf(query)
+```
+
+##Visualizing the Data--------------------------------------------
+
+```{r}
+ggplot()+
+  geom_line(data=result,aes(x=yearID, y=avg_salary))
+```
+

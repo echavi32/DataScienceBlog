@@ -35,6 +35,15 @@ query&amp;lt;-&amp;quot;SELECT playerID,yearID,teamID,HR FROM Batting WHERE HR&a
     </item>
     
     <item>
+      <title>SQL Fun</title>
+      <link>/post/sql-fun/</link>
+      <pubDate>Mon, 09 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/sql-fun/</guid>
+      <description>library(Lahman)library(sqldf)library(ggplot2)The Data——————————————————-query&amp;lt;-&amp;quot;SELECT playerID, salary FROM Salaries&amp;quot;result&amp;lt;-sqldf(query)Visualizing The Data——————————————–ggplot()+geom_histogram(data=result,aes(x=salary))## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.The Data——————————————————–query&amp;lt;-&amp;quot;SELECT yearID, avg(salary) AS avg_salaryFROM SalariesGROUP BY yearID&amp;quot;result&amp;lt;-sqldf(query)Visualizing the Data——————————————–ggplot()+geom_line(data=result,aes(x=yearID, y=avg_salary))</description>
+    </item>
+    
+    <item>
       <title>(Hu)go Template Primer</title>
       <link>/post/goisforlovers/</link>
       <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
@@ -78,10 +87,10 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.</description>
     
     <item>
       <title></title>
-      <link>/post/migrate-from-jekyll/</link>
+      <link>/post/filtering-using-sql/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/post/migrate-from-jekyll/</guid>
+      <guid>/post/filtering-using-sql/</guid>
       <description>Filtering Rows/Columns Using SQLcode{white-space: pre;}pre:not([class]) {background-color: white;}if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) {window.setTimeout(function() {hljs.initHighlighting();}, 0);}h1 {font-size: 34px;}h1.title {font-size: 38px;}h2 {font-size: 30px;}h3 {font-size: 24px;}h4 {font-size: 18px;}h5 {font-size: 16px;}h6 {font-size: 12px;}.</description>
     </item>
     

@@ -98,6 +98,22 @@ query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting WHERE HR&gt;39&quo
 	</div>
 </article>
 <article class="list__item post clearfix">
+	<div class="list__content clearfix">
+		<header class="list__header">
+			<h3 class="list__title post__title ">
+				<a href="/post/sql-fun/" rel="bookmark">SQL Fun</a>
+			</h3>
+			<div class="list__meta meta">
+				<svg class="icon icon-time" height="14" viewBox="0 0 16 16" width="14" xmlns="http://www.w3.org/2000/svg"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+				<time class="list__meta-date" datetime="2017-10-09T00:00:00">October 09, 2017</time>
+			</div>
+		</header>
+		<div class="list__excerpt">
+			library(Lahman)library(sqldf)library(ggplot2)The Data——————————————————-query&lt;-&quot;SELECT playerID, salary FROM Salaries&quot;result&lt;-sqldf(query)Visualizing The Data——————————————–ggplot()+geom_histogram(data=result,aes(x=salary))## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.The Data——————————————————–query&lt;-&quot;SELECT yearID, avg(salary) AS avg_salaryFROM SalariesGROUP BY yearID&quot;result&lt;-sqldf(query)Visualizing the Data——————————————–ggplot()+geom_line(data=result,aes(x=yearID, y=avg_salary))
+		</div>
+	</div>
+</article>
+<article class="list__item post clearfix">
 	<figure class="list__thumbnail">
 		<a href="/post/goisforlovers/">
 			<img src="/img/placeholder.png" alt="(Hu)go Template Primer" />
@@ -165,7 +181,7 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.
 	<div class="list__content clearfix">
 		<header class="list__header">
 			<h3 class="list__title post__title ">
-				<a href="/post/migrate-from-jekyll/" rel="bookmark"></a>
+				<a href="/post/filtering-using-sql/" rel="bookmark"></a>
 			</h3>
 		</header>
 		<div class="list__excerpt">
@@ -197,10 +213,11 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.
 		<ul class="widget__list">
 			<li class="widget__item"><a class="widget__link" href="/post/creating-a-new-theme/">Creating a New Theme</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/migrate-from-jekyll/">Filtering Rows/Columns Using SQL</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/sql-fun/">SQL Fun</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/goisforlovers/">(Hu)go Template Primer</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/hugoisforlovers/">Getting Started with Hugo</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/2015-07-23-r-rmarkdown/"></a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/migrate-from-jekyll/"></a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/filtering-using-sql/"></a></li>
 		</ul>
 	</div>
 </div>
