@@ -13,7 +13,7 @@
 
 
 
-<meta property="og:updated_time" content="2014-09-28T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2014-03-10T00:00:00&#43;00:00"/>
 
 
 
@@ -48,9 +48,7 @@
 <nav class="menu" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 	<ul class="menu__list">
 		<li class="menu__item "><a class="menu__link" href="/post/migrate-from-jekyll/">SQL FILTERING</a></li>
-		<li class="menu__item "><a class="menu__link" href="/post/goisforlovers/">(HU)GO TEMPLATE PRIMER</a></li>
 		<li class="menu__item "><a class="menu__link" href="/about/">ABOUT HUGO</a></li>
-		<li class="menu__item "><a class="menu__link" href="/post/hugoisforlovers/">GETTING STARTED WITH HUGO</a></li>
 	</ul>
 </nav>
 
@@ -61,23 +59,6 @@
 		<header class="page-header">
 			<h1 class="page-header__title">Posts</h1>
 		</header><article class="list__item post clearfix">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/creating-a-new-theme/" rel="bookmark">Creating a New Theme</a>
-			</h3>
-			<div class="list__meta meta">
-				<svg class="icon icon-time" height="14" viewBox="0 0 16 16" width="14" xmlns="http://www.w3.org/2000/svg"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-				<time class="list__meta-date" datetime="2014-09-28T00:00:00">September 28, 2014</time>
-			</div>
-		</header>
-		<div class="list__excerpt">
-			Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&rsquo;t cover using CSS to style your theme.
-We&rsquo;ll start with creating a new site with a very basic template.
-		</div>
-	</div>
-</article>
-<article class="list__item post clearfix">
 	<div class="list__content clearfix">
 		<header class="list__header">
 			<h3 class="list__title post__title ">
@@ -110,70 +91,6 @@ query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting WHERE HR&gt;39&quo
 		</header>
 		<div class="list__excerpt">
 			library(Lahman)library(sqldf)library(ggplot2)The Data——————————————————-query&lt;-&quot;SELECT playerID, salary FROM Salaries&quot;result&lt;-sqldf(query)Visualizing The Data——————————————–ggplot()+geom_histogram(data=result,aes(x=salary))## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.The Data——————————————————–query&lt;-&quot;SELECT yearID, avg(salary) AS avg_salaryFROM SalariesGROUP BY yearID&quot;result&lt;-sqldf(query)Visualizing the Data——————————————–ggplot()+geom_line(data=result,aes(x=yearID, y=avg_salary))
-		</div>
-	</div>
-</article>
-<article class="list__item post clearfix">
-	<figure class="list__thumbnail">
-		<a href="/post/goisforlovers/">
-			<img src="/img/placeholder.png" alt="(Hu)go Template Primer" />
-		</a>
-	</figure>
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/goisforlovers/" rel="bookmark">(Hu)go Template Primer</a>
-			</h3>
-			<div class="list__meta meta">
-				<svg class="icon icon-time" height="14" viewBox="0 0 16 16" width="14" xmlns="http://www.w3.org/2000/svg"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-				<time class="list__meta-date" datetime="2014-04-02T00:00:00">April 02, 2014</time>
-			</div>
-		</header>
-		<div class="list__excerpt">
-			<p>Hugo uses the excellent <a href="http://golang.org/&gt;">go</a> <a href="http://golang.org/pkg/html/template/&gt;">html/template</a> library for
-its template engine. It is an extremely lightweight engine that provides a very
-small amount of logic. In our experience that it is just the right amount of
-logic to be able to create a good static website. If you have used other
-template systems from different languages or frameworks you will find a lot of
-similarities in go templates.</p>
-
-<p></p>
-		</div>
-	</div>
-</article>
-<article class="list__item post clearfix">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/hugoisforlovers/" rel="bookmark">Getting Started with Hugo</a>
-			</h3>
-			<div class="list__meta meta">
-				<svg class="icon icon-time" height="14" viewBox="0 0 16 16" width="14" xmlns="http://www.w3.org/2000/svg"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
-				<time class="list__meta-date" datetime="2014-04-02T00:00:00">April 02, 2014</time>
-			</div>
-		</header>
-		<div class="list__excerpt">
-			Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:
-		</div>
-	</div>
-</article>
-<article class="list__item post clearfix">
-	<div class="list__content clearfix">
-		<header class="list__header">
-			<h3 class="list__title post__title ">
-				<a href="/post/2015-07-23-r-rmarkdown/" rel="bookmark"></a>
-			</h3>
-		</header>
-		<div class="list__excerpt">
-			bu— title: “Hello R Markdown” author: “Frida Gomam” date: 2015-07-23T21:13:14-05:00 categories: [“R”] tags: [“R Markdown”, “plot”, “regression”] —
-R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.
 		</div>
 	</div>
 </article>
@@ -211,41 +128,17 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/post/creating-a-new-theme/">Creating a New Theme</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/migrate-from-jekyll/">Filtering Rows/Columns Using SQL</a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/sql-fun/">SQL Fun</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/goisforlovers/">(Hu)go Template Primer</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/hugoisforlovers/">Getting Started with Hugo</a></li>
-			<li class="widget__item"><a class="widget__link" href="/post/2015-07-23-r-rmarkdown/"></a></li>
 			<li class="widget__item"><a class="widget__link" href="/post/filtering-using-sql/"></a></li>
 		</ul>
 	</div>
 </div>
 
 	
-<div class="widget-categories widget">
-	<h4 class="widget__title">Categories</h4>
-	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="/categories/development">Development</a></li>
-			<li class="widget__item"><a class="widget__link" href="/categories/golang">Golang</a></li>
-		</ul>
-	</div>
-</div>
 	
 
 	
-<div class="widget-taglist widget">
-	<h4 class="widget__title">Tags</h4>
-	<div class="widget__content">
-		<a class="widget__link widget__link--taglist" href="/tags/development" title="development">development</a>
-		<a class="widget__link widget__link--taglist" href="/tags/go" title="go">go</a>
-		<a class="widget__link widget__link--taglist" href="/tags/golang" title="golang">golang</a>
-		<a class="widget__link widget__link--taglist" href="/tags/hugo" title="hugo">hugo</a>
-		<a class="widget__link widget__link--taglist" href="/tags/templates" title="templates">templates</a>
-		<a class="widget__link widget__link--taglist" href="/tags/themes" title="themes">themes</a>
-	</div>
-</div>
 </aside>
 
 	</div>
